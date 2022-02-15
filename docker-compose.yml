@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  web:
+    image: nginx:stable-alpine
+    container_name: test_webserver
+    restart: always
+    depends_on:
+      - db
+      - php
+    links:
+      - db
+      - php
+    volumes:
+      - .:/var/www/html
+      - .docker/nginx:/etc/nginx/conf.d/
+    ports:
+      - "8010:80"
+
+  php:
+    build: .
+    image:  php5.6-xdebug-custom
+    container_name: test_php-fpm
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html/
+      - .docker/php/php.ini-development:/usr/local/etc/php/php.ini
+    env_file:
+      - .env
+
+  db:
+    image: mariadb
+    container_name: test_database
+    restart: always
+    volumes:
+        - .docker/data:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "8890:3306"
