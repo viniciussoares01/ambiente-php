@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `contato_php`.`usuarios` (
+  `id` INT(11) NOT NULL,
+  `nome` VARCHAR(200) NOT NULL,
+  `email` VARCHAR(200) NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
